@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<h1>Model-View-Controller (MVC) Custom Builder</h1>
+<h2>Database Connection Information</h2>
+
+<div class="container">
+        <form class="frm" >
+            <div class="form-group col-md-2">
+                <label for="exampleFormControlSelect1">View Type</label>
+				<select class="form-control" id="viewType" name="viewType">
+                <option value="" disabled selected>View</option>
+				<option value="React">React</option>
+				<option value="EJS">EJS</option>
+				<option value="Handlebars">Handlebars</option>
+				</select>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="exampleFormControlSelect1">Db Type</label>
+				<select class="form-control" id="dbType" name="optDB">
+                <option value="" disabled selected>DB</option>
+				<option value="mySQL">mySQL</option>
+				<option value="mongoDB">mongoDB</option>
+				<option value="postgreSQL">postgreSQL</option>
+				</select>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="fname" class="control-label">db Name</label>
+				<input type="text" class="form-control" id="dbName" placeholder="Database Name"/>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="sname" class="control-label">db Login</label>
+				<input type="text" value='' class="form-control" id="dbLoginName" placeholder="Database Login Name"/>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="job" class="control-label">db Password</label>
+				<input type="text" value='' class="form-control" id="dbLoginPassword" placeholder="Database Login Password"/>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="title" class="control-label">Table Name</label>
+				<input type="text" value='' class="form-control" id="t1Name" placeholder="Table Name" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="title" class="control-label">Column1 Name</label>
+                <input type="text" value='' class="form-control" id="column1Name" placeholder="Column1 Name" />
+            </div>
+            <div class="form-group col-md-2">
+                <label for="exampleFormControlSelect1">Is Primary</label>
+                <select class="form-control" id="isPrimary" name="IsPrimary">
+                <option value="" disabled selected>Null?</option>
+                <option>Yes</option>
+                <option>No</option>
+                </select>
+            </div>
+                <div class="form-group col-md-2">
+					<label for="exampleFormControlSelect1">Data Type</label>
+					<select class="form-control" id="dataType" name="Column1DataType">
+					<option value="" disabled selected>Data Type</option>
+					<option>Integer</option>
+					<option>String</option>
+					<option>Date</option>
+					<option>Boolean</option>
+					</select>
+                </div>
+                    
+                <div class="form-group col-md-2">
+					<label for="exampleFormControlSelect1">Is Null</label>
+					<select class="form-control" id="isNull" name="Column1IsNull">
+					<option value="" disabled selected>Null?</option>
+					<option>Yes</option>
+					<option>No</option>
+					</select>
+                </div>
+				<button id="btnClick" class="btn btn-primary" type="button">Submit</button>
+             </div>
+    </form>
+</div>
+
+<script>
+
+    var viewType = '';
+    var dbType = '';
+    var dbName = '';
+    var dbLoginName = '';
+    var dbLoginPassword = '';
+    var t1Name = '';
+    var column1Name = '';
+    var isPrimary = '';
+    var dataType = '';
+    var isNull = '';
+
+$(document).ready(function() {
+    $('#btnClick').click(function(event) {
+        viewType = ($('#viewType option:selected').text());
+        dbType = ($('#dbType option:selected').text());
+        dbName = $('#dbName').val();
+        dbLoginName = $('#dbLoginName').val();
+        dbLoginPassword = $('#dbLoginPassword').val();
+        t1Name = $('#t1Name').val();
+        column1Name = $('#column1Name').val();
+		isPrimary = ($('#isPrimary option:selected').text());
+		dataType = ($('#dataType option:selected').text());
+		isNull = ($('#isNull option:selected').text());
+
+        var info = {viewType, dbType, dbName, dbLoginName, dbLoginPassword, t1Name, column1Name, isPrimary, dataType, isNull};
+        console.log(info);
+         fetch('/users/api/data', {
+            method: 'Post',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(info)
+        }).then(response => response.json()).then(data => console.log(data));
+
+		console.log(isNull);
+    });
+});
+</script>
+	
+</body>
+</html>
